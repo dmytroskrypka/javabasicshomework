@@ -1,7 +1,5 @@
 package generics.convert.array.to.list;
 
-import java.util.LinkedList;
-import java.util.List;
 
 public class ConverterDemo {
 
@@ -16,19 +14,13 @@ public class ConverterDemo {
 		sa[1]="two";
 		sa[2]="three";
 		
-		List<Integer> il = convertToList(ia);
-		List<String> sl = convertToList(sa);
+		MyLinkedList<Integer> il = new MyLinkedList<Integer>();
+		MyLinkedList<String> sl = new MyLinkedList<String>();
+		
+		il.setListFromArray(ia);
+		sl.setListFromArray(sa);
 		
 		System.out.println(il.toString());
 		System.out.println(sl.toString());
 	}
-	
-	public static <T> List<T> convertToList(T[] array) {
-		 List<T> list = new LinkedList<T>();
-		for(T element: array){
-			list.add(element);
-		}
-		return list;
-	}
-
 }
