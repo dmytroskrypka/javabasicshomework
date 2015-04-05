@@ -9,7 +9,7 @@ public class Main {
 		MyLinkedList<String> files = new MyLinkedList<String>();
 		files = getListOfFiles("c:\\Users\\edmiskr\\Documents\\Programming\\output");
 		//System.out.println(files);
-		files.printFirstElements(4);
+		files.printFirstElements(5);
 	}
 	
 	
