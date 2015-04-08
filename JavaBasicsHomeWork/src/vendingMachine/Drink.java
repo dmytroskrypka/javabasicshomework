@@ -1,4 +1,4 @@
-package wendingMachine;
+package vendingMachine;
 
 public enum Drink {
 	COLA,

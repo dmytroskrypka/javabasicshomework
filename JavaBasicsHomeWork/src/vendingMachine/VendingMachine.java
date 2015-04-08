@@ -1,14 +1,14 @@
-package wendingMachine;
+package vendingMachine;
 
 import java.util.Scanner;
 
-public class WendingMachine {
+public class VendingMachine {
 	
 	private static final Product[] MENU = new Product[4];
 	private Product lastorder;
 	private Scanner scanner = new Scanner(System.in);	
 
-	public WendingMachine() {
+	public VendingMachine() {
 		
 		MENU[0] = new Product(Drink.COLA, 1, 0);
 		MENU[1] = new Product(Drink.FANTA, 1, 0);

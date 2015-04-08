@@ -1,4 +1,4 @@
-package wendingMachine;
+package vendingMachine;
 
 public class Order {
 	private Product product;

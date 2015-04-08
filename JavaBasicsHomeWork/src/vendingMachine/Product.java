@@ -1,4 +1,4 @@
-package wendingMachine;
+package vendingMachine;
 
 public class Product implements Cloneable {
 	private Drink drink;
@@ -70,6 +70,7 @@ public class Product implements Cloneable {
 		return quantity>0?"We have "+quantity+" "+drink + " drinks for a price of $" + price: "We don't have any "+drink+" left";
 	}
 	
+	@Override	
 public Product clone(){
    try {
        return (Product)super.clone();

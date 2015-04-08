@@ -1,10 +1,10 @@
-package wendingMachine;
+package vendingMachine;
 
-public class WendingMachineDemo {
+public class VendingMachineDemo {
 	
 
 	public static void main(String[] args) {
-		WendingMachine wm = new WendingMachine();
+		VendingMachine wm = new VendingMachine();
 		
 		wm.setMENUPrices();
 		wm.setMENUQuantities();
