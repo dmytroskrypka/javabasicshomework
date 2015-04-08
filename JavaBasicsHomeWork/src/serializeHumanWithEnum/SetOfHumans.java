@@ -12,9 +12,25 @@ import java.io.ObjectOutputStream;
 import java.util.HashSet;
 
 public class SetOfHumans {
-	HashSet<Human> humans;
-	String name;
+	private HashSet<Human> humans;
+	private String name;
 	
+	public void addHuman(Human human) {
+		this.humans.add(human);
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public HashSet<Human> getHumans() {
+		return humans;
+	}
+
+	public String getName() {
+		return name;
+	}
+
 	public SetOfHumans(String name) {
 		humans = new HashSet<Human>();
 		this.name = name;
