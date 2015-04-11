@@ -9,10 +9,11 @@ import java.util.HashMap;
 
 public class Dictionary {
 	private HashMap<String, String> dictionary;
-	private static final String FILENAME = "D:\\Java\\workspace\\Lessons\\src\\dictionary\\dictionary.txt";
+	private String filename;
 	
 	
-	public Dictionary() {
+	public Dictionary(String filename) {
+		this.filename = filename;
 		this.dictionary = new HashMap<String, String>();
 		try {
 			this.readMap();
@@ -22,7 +23,7 @@ public class Dictionary {
 	}
 
 	public String getFilename() {
-		return FILENAME;
+		return filename;
 	}
 
 	public HashMap<String, String> getDictionary() {
