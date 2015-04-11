@@ -1,13 +1,14 @@
 package vendingMachine;
 
 public class VendingMachineDemo {
+	public static final String VMDATAFILE = "vendingmachine.dat";
 	
 
 	public static void main(String[] args) {
-		VendingMachine wm = new VendingMachine();
+		//VendingMachine wm = new VendingMachine(); //create new machine
+		//wm.saveToFile(VMDATAFILE);
 		
-		wm.setMENUPrices();
-		wm.setMENUQuantities();
+		VendingMachine wm = new VendingMachine(VMDATAFILE); //read existing machine data from file
 		
 		while (true){
 	        	System.out.println("1 - see menu");
@@ -27,6 +28,7 @@ public class VendingMachineDemo {
 			        	break;
 			        case 0:
 			    		System.out.println("Have a nice day!");
+			    		wm.saveToFile(VMDATAFILE);
 			        	return;
 			        default:
 			        	System.out.println("Input mismatch, please try again");

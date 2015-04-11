@@ -1,14 +1,18 @@
 package vendingMachine;
 
-public class Product implements Cloneable {
+import java.io.Serializable;
+
+public class Product implements Cloneable, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Drink drink;
 	private int price;
-	private int quantity; //move this out from this class and use HashMap in WendingMachine class
 		
-	public Product(Drink drink, int price, int quantity) {
+	public Product(Drink drink, int price) {
 		this.drink = drink;
 		this.price = price;		
-		this.quantity = quantity;
 	}
 
 	/**
@@ -18,27 +22,8 @@ public class Product implements Cloneable {
 		return drink;
 	}
 
-	/**
-	 * @return the quantity
-	 */
-	public int getQuantity() {
-		return quantity;
-	}
-
-	/**
-	 * @param quantity the quantity to set
-	 */
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-	
-	public void addQuantity(int quantity) {
-		this.quantity += quantity;
-	}
-	
 	public void sellDrink() {
 		System.out.println("Please take your " +this.drink+ "!");
-		this.quantity--;
 	}
 
 	/**
@@ -62,14 +47,33 @@ public class Product implements Cloneable {
 		this.price = price;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return quantity>0?"We have "+quantity+" "+drink + " drinks for a price of $" + price: "We don't have any "+drink+" left";
-	}
 	
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((drink == null) ? 0 : drink.hashCode());
+		result = prime * result + price;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Product other = (Product) obj;
+		if (drink != other.drink)
+			return false;
+		if (price != other.price)
+			return false;
+		return true;
+	}
+
 	@Override	
 public Product clone(){
    try {

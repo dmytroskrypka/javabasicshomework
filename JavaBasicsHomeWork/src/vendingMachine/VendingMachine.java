@@ -1,22 +1,94 @@
 package vendingMachine;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class VendingMachine {
 	
-	private static final Product[] MENU = new Product[4];
+	private Map<Product, Integer> menu; //Product, Quantity
+	private String statusfile;
 	private Product lastorder;
 	private Scanner scanner = new Scanner(System.in);	
 
 	public VendingMachine() {
+		this.menu = new HashMap<Product, Integer>();	
+		this.setupNewMachine();
+		this.lastorder= null;
+		this.statusfile = null;
+	}
+
+	public VendingMachine(String statusfile) {
 		
-		MENU[0] = new Product(Drink.COLA, 1, 0);
-		MENU[1] = new Product(Drink.FANTA, 1, 0);
-		MENU[2] = new Product(Drink.SPRITE, 1, 0);
-		MENU[3] = new Product(Drink.WATER, 1, 0);
+		this.menu = new HashMap<Product, Integer>();	
+		this.statusfile = statusfile;
+		
+		File f = new File(statusfile);
+		if(f.exists() && !f.isDirectory() && f.length() != 0){
+			this.setupFromFile(statusfile);
+		} else {
+			this.setupNewMachine();
+		}
 		
 		lastorder= null;
 	}
+
+private void setupNewMachine() {
+		System.out.println("Setting new machine...");
+		int price;
+		int quantity;
+		for(Drink d: Drink.values()){
+			System.out.println("Set price for "+ d.toString());
+			price = this.scanner.nextInt();
+			System.out.println("Set quantity for "+ d.toString());
+			quantity = this.scanner.nextInt();
+			menu.put(new Product(d, price), quantity);
+		}
+	}
+
+@SuppressWarnings("unchecked")
+private void setupFromFile(String statusfile) {
+	ObjectInputStream ois = null;
+	try {
+		ois= new ObjectInputStream(new FileInputStream(statusfile));
+		this.menu.putAll((HashMap<Product, Integer>) ois.readObject());
+		
+	}catch (ClassNotFoundException ex) {
+		System.out.println("wrong class in the file");
+	}catch (FileNotFoundException ex){
+		System.out.println("file not found");
+	}catch (Exception ex){	
+	} finally {
+	            if (ois != null) {
+	                try {
+	                	ois.close();
+	                } catch (Exception e) {}
+	            }
+	        }
+	}
+
+public void saveToFile(String statusfile){
+	ObjectOutputStream oos = null;
+	try {
+		oos= new ObjectOutputStream(new FileOutputStream(statusfile));
+				oos.writeObject(menu);
+	}catch (IOException ex) {
+	} finally {
+	            if (oos != null) {
+	                try {
+	                	//oos.flush();
+	                	oos.close();
+	                } catch (Exception e) {}
+	            }
+	        }
+}
 
 /**
 	 * @return the scanner
@@ -24,26 +96,36 @@ public class VendingMachine {
 	public Scanner getScanner() {
 		return scanner;
 	}
-
-public Product getMENUItem(Drink drink) {
-		for(Product d: MENU){
-			if(d.getDrink()==drink) {
-				return d;
-			} 
-		}
-		return null; 
+	
+public String getStatusfile() {
+	return statusfile;
 }
 
-public void setPrice(Drink drink, int price) {
-	getMENUItem(drink).setPrice(price);
+public void setStatusfile(String statusfile) {
+	this.statusfile = statusfile;
+}
+
+public Map<Product, Integer> getMenu() {
+	return menu;
+}
+
+public Product getMenuItem(Drink drink) {
+		for(Product p: menu.keySet()){
+			if(p.getDrink()==drink) {
+				return p;
+			} 
+		}
+		//add throw exception here
+		return null;
 }
 
 public int getProductQuantity(Drink drink) {
-	return getMENUItem(drink).getQuantity();
+	return getMenu().get(getMenuItem(drink));
 }
 
 public void addProductQuantity(Drink drink, int quantity) {
-	getMENUItem(drink).addQuantity(quantity);
+	Integer newQuantity = getProductQuantity(drink)+quantity;
+	getMenu().put(getMenuItem(drink), newQuantity);
 }
 
 public void addUserProductQuantity() {
@@ -58,20 +140,10 @@ public void addUserProductQuantity() {
 	addProductQuantity(d, quantity);
 }
 
-public void setMENUQuantities() {
-	for(Drink d: Drink.values()){
-		System.out.println("Set quantity for " + d);
-		int quantity = this.scanner.nextInt();
-		addProductQuantity(d,quantity);
- 	}
-}
-
-public void setMENUPrices() {
-	for(Drink d: Drink.values()){
-		System.out.println("Set price for " + d);
-		int price = this.scanner.nextInt();
-		getMENUItem(d).setPrice(price);
- 	}
+public void sellProduct(Product product){
+	product.sellDrink();
+	Integer newQuantity = getMenu().get(product)-1;
+	this.menu.put(product, newQuantity);
 }
 
 public Order selectOrder(){
@@ -97,8 +169,8 @@ public Order selectOrder(){
 			return null;
 		}
 
-		order = new Order(this.getMENUItem(Drink.valueOf(drinkName.toUpperCase())).clone()); //testing clone
-		order.getProduct().setQuantity(1);
+		order = new Order(this.getMenuItem(Drink.valueOf(drinkName.toUpperCase())).clone()); //testing clone
+		order.getProduct();
 		return order;
 }
 
@@ -113,7 +185,7 @@ public void payForOrder(Order order){
 		if(order.isPaid()){
 			System.out.println("Your change is " + change);
 			this.lastorder = order.getProduct();
-			this.getMENUItem(order.getProduct().getDrink()).sellDrink();
+			this.sellProduct(order.getProduct());
 		} else {
 			System.out.println("Not enough coins! Order cancelled");
 			System.out.println("Your change is " + payment);
@@ -122,7 +194,7 @@ public void payForOrder(Order order){
 }
 
 public int getPrice(Drink drink, int price) { //add exception for non existing drink?
-	return getMENUItem(drink).getPrice();
+	return getMenuItem(drink).getPrice();
 }
 
 /* (non-Javadoc)
@@ -134,8 +206,12 @@ public String toString() {
 	sb.append("Wending Machine Menu: ");
 	sb.append(System.getProperty("line.separator"));
 	
-	for(Product p: MENU){
-		sb.append(p.toString());
+	for(Product p: this.menu.keySet()){
+		sb.append(this.menu.get(p)>0?
+				"We have "+this.menu.get(p)+" "+p.getDrink()+" drinks for a price of $"+p.getPrice():
+				"We don't have any"+p.getDrink()+" left"
+				);
+		
 		sb.append(System.getProperty("line.separator"));
 	} 
 
