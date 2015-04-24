@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="Homework_src"/>
 	<classpathentry kind="src" path="synchronization"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="Threads"/>
@@ -11,5 +11,7 @@
 			<attribute name="source_encoding" value="UTF-8"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="src" path="Example_src"/>
+	<classpathentry kind="src" path="XML_examples"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
