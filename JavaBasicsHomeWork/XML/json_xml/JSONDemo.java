@@ -1,6 +1,7 @@
 package json_xml;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.*;
 
 import com.google.gson.*;
@@ -8,7 +9,10 @@ import com.google.gson.*;
 public class JSONDemo {
 
 	public static void main(String[] args) throws IOException {
-		String result = readFile("D:\\Java\\workspace\\Lessons\\XML\\json_xml\\resources\\json.jsn");
+		String result = readFile(JSONDemo.class.getResource("resources/json.jsn").getFile().substring(1));
+		//InputStream in = JSONDemo.class.getResourceAsStream("resources/json.jsn");
+		//System.out.println(in!=null); 
+		System.out.println(JSONDemo.class.getResource("resources/json.jsn").getPath()); 
 		
 		Gson gson = new GsonBuilder().create();
 		MyJSON myjson = (MyJSON) gson.fromJson(result, MyJSON.class);
