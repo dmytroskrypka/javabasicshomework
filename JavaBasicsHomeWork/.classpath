@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="Homework_src"/>
-	<classpathentry kind="src" path="synchronization"/>
+	<classpathentry kind="src" path="lesson4"/>
+	<classpathentry kind="src" path="lesson5"/>
+	<classpathentry kind="src" path="lesson6"/>
+	<classpathentry kind="src" path="lesson9"/>
+	<classpathentry kind="src" path="lesson10"/>
+	<classpathentry kind="src" path="lesson11"/>
+	<classpathentry kind="src" path="lesson12"/>
+	<classpathentry kind="src" path="lesson13"/>
+	<classpathentry kind="src" path="lesson14"/>
+	<classpathentry kind="src" path="lesson16"/>
+	<classpathentry kind="src" path="lesson18"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="src" path="Threads"/>
-	<classpathentry kind="src" path="XML"/>
-	<classpathentry kind="lib" path="C:/Users/edmiskr/Documents/Programming/eclipse/user libraries/gson/gson-2.3.1.jar" sourcepath="C:/Users/edmiskr/Documents/Programming/eclipse/user libraries/gson/gson-2.3.1-sources.jar">
+	<classpathentry kind="src" path="lesson15"/>
+	<classpathentry kind="src" path="lesson17"/>
+	<classpathentry kind="lib" path="D:/Java/Tools/GSON/gson-2.3.1.jar" sourcepath="D:/Java/Tools/GSON/gson-2.3.1-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/C:/Users/edmiskr/Documents/Programming/eclipse/user%20libraries/gson/gson-2.3.1-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:file:/D:/Java/Tools/GSON/gson-2.3.1-javadoc.jar!/"/>
 			<attribute name="source_encoding" value="UTF-8"/>
 		</attributes>
 	</classpathentry>
