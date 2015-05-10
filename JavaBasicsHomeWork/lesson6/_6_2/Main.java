@@ -1,4 +1,4 @@
-package _Interfaces_2;
+package _6_2;
 
 import java.util.Arrays;
 
